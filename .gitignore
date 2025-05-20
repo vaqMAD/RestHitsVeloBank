@@ -1,0 +1,19 @@
+# Python
+*.pyc
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Virtual environment
+venv/
+env/
+
+# PyCharm
+.idea/
+
+# Database
+db.sqlite3
+
+#Others
+.coverage
+/htmlcov
