@@ -10,17 +10,25 @@ from RestHits.Utils.mixins import PermitGetAdminModifyMixin
 from .filters import ArtistFilter
 
 
-class ArtistListCreateView(generics.ListCreateAPIView):
+class ArtistListCreateView(PermitGetAdminModifyMixin, generics.ListCreateAPIView):
+    """
+    GET: List 20 artists with filtering and ordering.
+    POST: Create a new artist (admin only).
+    """
     serializer_class = ArtistListCreateSerializer
     pagination_class = DefaultPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_class = ArtistFilter
-    ordering_fields = ['first_name', 'last_name']
-
-    def get_queryset(self):
-        return Artist.objects.all()
+    ordering_fields = ['first_name', 'last_name', 'created_at', 'updated_at']
+    ordering = ['first_name', 'last_name']
+    queryset = Artist.objects.all()
 
 
 class ArtistDetailView(PermitGetAdminModifyMixin, generics.RetrieveUpdateDestroyAPIView):
+    """
+    GET: Retrieve artist details.
+    PUT/PATCH: Update artist (admin only).
+    DELETE: Remove artist (admin only).
+    """
     serializer_class = ArtistDetailSerializer
     queryset = Artist.objects.all()
