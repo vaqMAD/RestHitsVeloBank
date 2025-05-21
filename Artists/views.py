@@ -2,11 +2,11 @@
 from rest_framework import generics
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
-from rest_framework.permissions import (IsAuthenticated, IsAdminUser)
 # Internal imports
 from .models import Artist
 from .serializers import (ArtistListCreateSerializer, ArtistDetailSerializer)
 from RestHits.Utils.pagination import DefaultPagination
+from RestHits.Utils.mixins import PermitGetAdminModifyMixin
 from .filters import ArtistFilter
 
 
@@ -21,12 +21,6 @@ class ArtistListCreateView(generics.ListCreateAPIView):
         return Artist.objects.all()
 
 
-class ArtistDetailView(generics.RetrieveUpdateDestroyAPIView):
+class ArtistDetailView(PermitGetAdminModifyMixin, generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ArtistDetailSerializer
     queryset = Artist.objects.all()
-
-    def get_permissions(self):
-        if self.request.method in ['GET']:
-            return []
-        else:
-            return [IsAuthenticated(), IsAdminUser()]
