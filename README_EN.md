@@ -145,4 +145,10 @@ Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
 }
 ```
 
+
+# Post Scriptum
+Finally, I’d like to point out that due to time constraints, I wasn’t able to fine-tune every aspect of the project. For example, the tests could be more flexible and better organized to reduce code repetition. While this doesn’t impact the current performance of the application, it may affect its long-term stability — something I’m fully aware of. I plan to continue developing this project and introducing improvements, both in terms of code readability and adherence to good programming practices, as well as enhancing the test suite.
+
+---
+
 ---
