@@ -37,7 +37,7 @@ Wprowadziłem kilka funkcjonalności wykraczających poza podstawowe wymagania, 
 - **Problem N+1 rozwiązany** — zapytania do bazy danych zostały zoptymalizowane.
 - **UUID jako identyfikatory zasobów (zamiast integerów)** — trudniejsze do odgadnięcia, bezpieczniejsze przy współpracy z frontendem.
 - **Dynamiczne Generowanie title_url (zamiast pola w bazie):** - nie trzymam go w bazie, tylko obliczam przy serializacji. Mniejszy narzut dla DB, większa elastyczność.
-- **Tylko superużytkownicy mogą modyfikować dane (POST/PUT/DELETE)** - zachowanie integralności i bezpieczeństwa systemu. Niżej znajdą Państwo automatycznie przygotowanie dane do autoryzacji, niczego nie trzeba generować samemu :). 
+- **Tylko superużytkownicy mogą modyfikować dane (POST/PUT/DELETE)** - zachowanie integralności i bezpieczeństwa systemu. Niżej znajdą Państwo automatycznie przygotowanie dane do autoryzacji, niczego nie trzeba generować ręcznie samemu :). 
 
 ---
 
