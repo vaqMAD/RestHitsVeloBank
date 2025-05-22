@@ -1,6 +1,6 @@
 # 🎵 RestHits – API do zarządzania Hitami Muzycznymi
 
-Wprowadziłem kilka zmian w stosunku do pierwotnej specyfikacj. Wynikają one z moich preferencji
+Wprowadziłem kilka zmian w stosunku do pierwotnej specyfikacji. Wynikają one z moich preferencji
 programistycznych, szczególnie w obszarze bezpieczeństwa i zgodności z zasadami REST.
 
 Uważam, że te modyfikacje
