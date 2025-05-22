@@ -3,8 +3,13 @@ from rest_framework import serializers
 # Internal imports
 from .models import Artist
 
+class ArtistCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Artist
+        fields = ['id', 'first_name', 'last_name']
 
-class ArtistListCreateSerializer(serializers.ModelSerializer):
+
+class ArtistListSerializer(serializers.ModelSerializer):
     artist_url = serializers.HyperlinkedIdentityField(view_name='artists_detail')
 
     class Meta:
