@@ -20,16 +20,12 @@ class ArtistCacheSignalTests(APITestCase):
         self.user = User.objects.create_user(
             username='user1', password='pass1', email='user1@example.com'
         )
-        # admin (is_staff=True) – do testów POST/PATCH/DELETE
         self.admin = User.objects.create_user(
             username='admin1', password='pass2', email='admin@example.com',
             is_staff=True
         )
-
         self.client.force_authenticate(user=self.admin)
-
         self.artist = Artist.objects.create(first_name='Jane', last_name='Doe')
-
         self.list_url = reverse('artists_list_create')
         self.detail_url = lambda pk: reverse('artists_detail', args=[pk])
 
