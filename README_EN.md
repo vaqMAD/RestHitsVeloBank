@@ -28,7 +28,7 @@ I implemented some additional enhancements and features that go beyond the origi
 * **N+1 Query Problem Solved** – optimized database queries to eliminate N+1 issues.
 * **UUIDs for Resource Identifiers (instead of ints)** – UUIDs are harder to guess and more secure, especially when consumed by a frontend.
 * **Dynamic Generation of `title_url`** – instead of storing it in the database, it is dynamically generated during API serialization. This reduces DB load and increases flexibility.
-* **Superuser Authorization for Data-Modifying Operations** – all data-changing endpoints (`POST`, `PUT/PATCH`, `DELETE`) require superuser authentication to maintain data integrity and security.
+* **Superuser Authorization for Data-Modifying Operations** – all data-changing endpoints (`POST`, `PUT/PATCH`, `DELETE`) require superuser authentication to maintain data integrity and security. Below you will find the data for authorization, you do not need to generate anything manually :).
 
 ---
 
@@ -60,7 +60,12 @@ Once the container is running, the app will be available at:
 Interactive API docs available at:
 `http://127.0.0.1:8000/api/schema/swagger-ui/`
 
+You will find there all the necessary information about the endpoints provided.
+
+
 ### 🔑 Authentication and Authorization
+
+Authorization can be done with the token below, I also provide superuser details.
 
 * **Username:** `admin@admin.com`
 * **Password:** `1234`
@@ -94,7 +99,7 @@ docker-compose run --rm web python manage.py seed_data
 
 ---
 
-## 📱 First API Request
+## 📡 First API Request
 
 Start interacting with the API like this:
 
