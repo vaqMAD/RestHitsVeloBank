@@ -8,9 +8,9 @@ from .serializers import (ArtistListSerializer, ArtistDetailSerializer, ArtistCr
 from RestHits.Utils.pagination import DefaultPagination
 from RestHits.Utils.mixins import PermitGetAdminModifyMixin
 from .filters import ArtistFilter
+from RestHits.Utils.mixins import CacheListMixin
 
-
-class ArtistListCreateView(PermitGetAdminModifyMixin, generics.ListCreateAPIView):
+class ArtistListCreateView(CacheListMixin, PermitGetAdminModifyMixin, generics.ListCreateAPIView):
     """
     GET: List 20 artists with filtering and ordering.
     POST: Create a new artist (admin only).

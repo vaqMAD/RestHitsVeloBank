@@ -8,9 +8,10 @@ from .serializers import (HitDetailSerializer, HitListSerializer, HitCreateSeria
 from RestHits.Utils.mixins import PermitGetAdminModifyMixin
 from RestHits.Utils.pagination import DefaultPagination
 from .filters import HitFilter
+from RestHits.Utils.mixins import CacheListMixin
 
 
-class HitListCreateView(PermitGetAdminModifyMixin, generics.ListCreateAPIView):
+class HitListCreateView(CacheListMixin, PermitGetAdminModifyMixin, generics.ListCreateAPIView):
     """
     GET: List 20 hits with filtering and ordering.
     POST: Create a new hit (admin only).
