@@ -138,6 +138,6 @@ Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
 ```
 
 # Post Scriptum
-Na koniec chciałbym zaznaczyć, że z uwagi na ograniczenia czasowe nie zdążyłem jeszcze dopracować wszystkich aspektów, m.in. testy mogłyby być bardziej elastyczne i lepiej zorganizowane. Nie wpływa to na działanie aplikacji, ale planuję w dalszym ciągu rozwijać ten projekt i wprowadzać kolejne usprawnienia – także w obszarze testowania.
+Na koniec chciałbym zaznaczyć, że z uwagi na ograniczenia czasowe nie zdążyłem jeszcze dopracować wszystkich aspektów, m.in. testy mogłyby być bardziej elastyczne i lepiej zorganizowane pod kątem powtarzania kodu. Nie wpływa to na obecne działanie aplikacji, ale może wpłwać na jej przyszłe urzymanie w przyszłości, z czego zdaje sobie sprawę - planuję w dalszym ciągu rozwijać ten projekt i wprowadzać kolejne usprawnienia – pod kątem czytelności kodu, dobrych praktyk programistycznych, a także w obszarze testowania.
 
 ---
