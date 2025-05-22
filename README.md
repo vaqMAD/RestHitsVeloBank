@@ -97,7 +97,6 @@ Generowanie danych testowych odbywa się automatycznie przy starcie kontenera. O
 - `GET http://127.0.0.1:8000/artists/`  
   _Pobierz listę artystów: Odpowiedź (status 200 OK): Lista 20 artystów_
 
-  _Odpowiedź (status 200 OK): Lista 20 artystów._
 - `GET http://127.0.0.1:8000/hits/`  
   _Pobierz listę hitów: Odpowiedź (status 200 OK): Lista 20 hitów_
 
