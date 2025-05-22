@@ -66,9 +66,12 @@ Po uruchomieniu kontenera aplikacja będzie dostępna pod adresem:
 ### 2. API Dokumentacja
 
 Interaktywna dokumentacja API jest dostępna pod adresem:`http://127.0.0.1:8000/api/schema/swagger-ui/`
+
 Znajdą Państwo w niej wszystkie niezbędne informacje dotyczące udostępnionych endpointów.
 
 ### 🔑 Uwierzytelnianie i Autoryzacja
+
+Autoryzacji możemy dokonać za pomocą poniższego tokena, udostępniam także dane do superuser'a.
 
 - **Username:** `admin@admin.com`
 - **Password:** `1234`
