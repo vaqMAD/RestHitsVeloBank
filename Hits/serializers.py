@@ -5,6 +5,7 @@ from rest_framework import serializers
 from .models import Hit
 from Artists.serializers import ArtistListSerializer, ArtistDetailSerializer
 from .validators import validate_hit_ownership, validate_artist_exists
+from Artists.models import Artist
 
 
 class HitDetailSerializer(serializers.ModelSerializer):
@@ -71,3 +72,20 @@ class HitUpdateSerializer(serializers.ModelSerializer):
         representation['artist'] = artist_data
 
         return representation
+
+
+class HitNestedSerializer(serializers.ModelSerializer):
+    title_url = serializers.HyperlinkedIdentityField(view_name='hits_detail')
+
+    class Meta:
+        model = Hit
+        fields = ['id', 'title', 'title_url', 'created_at']
+
+
+class ArtistWithHitsSerializer(serializers.ModelSerializer):
+    hit_count = serializers.IntegerField(read_only=True)
+    hits = HitNestedSerializer(source='hit', many=True)
+
+    class Meta:
+        model = Artist
+        fields = ['id','first_name','last_name','hit_count','hits',]
