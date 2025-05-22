@@ -37,7 +37,7 @@ I implemented some additional enhancements and features that go beyond the origi
 You can install and run the application with:
 
 ```bash
-git clone https://github.com/vaqMAD/Link
+git clone https://github.com/vaqMAD/RestHitsVeloBank
 cd timemate
 docker compose up --build
 ```
