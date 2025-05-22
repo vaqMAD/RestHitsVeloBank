@@ -116,7 +116,7 @@ GET http://127.0.0.1:8000/hits/?ordering=-created_at&created_at_before=2025-05-2
 **🛠 Tworzenie naszych własnych rekordów**
 
 Można również przesyłać własne obiekty. Aplikacja zawiera walidację logiki biznesowej - na przykład dla modułu hit,
-jeśli artysta posiada już piosenkę o takiej nazwie, otrzymasz wyraźną odpowiedź o błędzie:
+jeśli artysta posiada już piosenkę o takiej samej nazwie, otrzymasz wyraźną odpowiedź o błędzie:
 
 ```http
 POST http://127.0.0.1:8000/hits/
