@@ -1,0 +1,750 @@
+openapi: 3.0.3
+info:
+  title: Rest Hits API for Velo Bank
+  version: 1.0.0
+paths:
+  /api/v1/artists/:
+    get:
+      operationId: api_v1_artists_list
+      description: |-
+        Returns a paginated list of artists.
+        Supports filtering and ordering.
+      summary: List 20 artists
+      parameters:
+      - in: query
+        name: first_name
+        schema:
+          type: string
+        description: Filter by artist first name (case-insensitive substring)
+      - in: query
+        name: last_name
+        schema:
+          type: string
+        description: Filter by artist last name (case-insensitive substring)
+      - in: query
+        name: ordering
+        schema:
+          type: string
+        description: 'Comma-separated fields to sort by: `first_name`, `-first_name`,
+          `last_name`, `-last_name`, `created_at`, `-created_at`, `updated_at`, `-updated_at`'
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - Artists
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedArtistListList'
+          description: ''
+    post:
+      operationId: api_v1_artists_create
+      description: |-
+        Creates a new Artist (admin only).
+        Request body: `first_name`, `last_name`.
+      summary: Create a new artist
+      tags:
+      - Artists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArtistCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ArtistCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ArtistCreate'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtistCreate'
+          description: ''
+  /api/v1/artists/{id}/:
+    get:
+      operationId: api_v1_artists_retrieve
+      description: Fetch full details of a single Artist by UUID.
+      summary: Retrieve artist details
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      - in: query
+        name: ordering
+        schema:
+          type: string
+        description: 'Comma-separated fields to sort by: `first_name`, `-first_name`,
+          `last_name`, `-last_name`, `created_at`, `-created_at`, `updated_at`, `-updated_at`'
+      tags:
+      - Artists
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtistDetail'
+          description: ''
+    put:
+      operationId: api_v1_artists_update
+      description: 'Full update: `first_name`, `last_name`(admin only)'
+      summary: Replace an artist
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Artists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArtistDetail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ArtistDetail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ArtistDetail'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtistDetail'
+          description: ''
+    patch:
+      operationId: api_v1_artists_partial_update
+      description: Modify one or more fields of the Artist (admin only)
+      summary: Partial update an artist
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Artists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedArtistCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedArtistCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedArtistCreate'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtistDetail'
+          description: ''
+    delete:
+      operationId: api_v1_artists_destroy
+      description: Remove the Artist permanently (admin only). Returns 204.
+      summary: Delete an artist
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Artists
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/hits/:
+    get:
+      operationId: api_v1_hits_list
+      description: Returns a paginated list of hits.Supports filtering and ordering.
+      summary: List 20 hits
+      parameters:
+      - in: query
+        name: artist_last_name
+        schema:
+          type: string
+        description: Filter by artist last name (case-insensitive substring)
+      - in: query
+        name: artist_name
+        schema:
+          type: string
+        description: Filter by artist first name (case-insensitive substring)
+      - in: query
+        name: created_at_after
+        schema:
+          type: string
+          format: date-time
+        description: Include hits created on or after this ISO8601 timestamp
+      - in: query
+        name: created_at_before
+        schema:
+          type: string
+          format: date-time
+        description: Include hits created on or before this ISO8601 timestamp
+      - in: query
+        name: ordering
+        schema:
+          type: string
+        description: 'Comma-separated fields: `created_at`, `-created_at`, `title`,
+          `-title`, `artist__first_name`, `-artist__first_name`, `artist__last_name`,
+          `-artist__last_name`'
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: title
+        schema:
+          type: string
+        description: Filter by hit title (case-insensitive substring)
+      tags:
+      - Hits
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedHitListList'
+          description: ''
+    post:
+      operationId: api_v1_hits_create
+      description: 'Creates a new Hit (admin only).Request body: `artist`, `title`.'
+      summary: Create a new hit
+      tags:
+      - Hits
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HitCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/HitCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/HitCreate'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HitCreate'
+          description: ''
+  /api/v1/hits/{id}/:
+    get:
+      operationId: api_v1_hits_retrieve
+      description: Fetch full details of a single Hit by UUID.
+      summary: Retrieve hit details
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Hits
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HitDetail'
+          description: ''
+    put:
+      operationId: api_v1_hits_update
+      description: 'Full update: `artist`, `title` (admin only).'
+      summary: Replace a hit
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Hits
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HitUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/HitUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/HitUpdate'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HitDetail'
+          description: ''
+    patch:
+      operationId: api_v1_hits_partial_update
+      description: Modify one or more fields of the Hit (admin only).
+      summary: Partial update a hit
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Hits
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedHitUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedHitUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedHitUpdate'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HitDetail'
+          description: ''
+    delete:
+      operationId: api_v1_hits_destroy
+      description: Remove the Hit permanently (admin only). Returns 204.
+      summary: Delete a hit
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Hits
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/hits/by-artist/:
+    get:
+      operationId: api_v1_hits_by_artist_list
+      description: Returns artists annotated with `hit_count` and nested `hits`.Sorted
+        by number of hits
+      summary: List artists with their hits
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - Hits
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedArtistWithHitsList'
+          description: ''
+components:
+  schemas:
+    ArtistCreate:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 255
+          minLength: 2
+        last_name:
+          type: string
+          maxLength: 255
+          minLength: 2
+      required:
+      - first_name
+      - id
+      - last_name
+    ArtistDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 255
+          minLength: 2
+        last_name:
+          type: string
+          maxLength: 255
+          minLength: 2
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - first_name
+      - id
+      - last_name
+      - updated_at
+    ArtistList:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 255
+          minLength: 2
+        last_name:
+          type: string
+          maxLength: 255
+          minLength: 2
+        artist_url:
+          type: string
+          format: uri
+          readOnly: true
+      required:
+      - artist_url
+      - first_name
+      - id
+      - last_name
+    ArtistWithHits:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 255
+          minLength: 2
+        last_name:
+          type: string
+          maxLength: 255
+          minLength: 2
+        hit_count:
+          type: integer
+          readOnly: true
+        hits:
+          type: array
+          items:
+            $ref: '#/components/schemas/HitNested'
+      required:
+      - first_name
+      - hit_count
+      - hits
+      - id
+      - last_name
+    HitCreate:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        title:
+          type: string
+          maxLength: 255
+          minLength: 2
+        artist_id:
+          type: string
+          format: uuid
+          writeOnly: true
+      required:
+      - artist_id
+      - id
+      - title
+    HitDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        title:
+          type: string
+          maxLength: 255
+          minLength: 2
+        artist:
+          allOf:
+          - $ref: '#/components/schemas/ArtistList'
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - artist
+      - created_at
+      - id
+      - title
+      - updated_at
+    HitList:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        title:
+          type: string
+          maxLength: 255
+          minLength: 2
+        title_url:
+          type: string
+          format: uri
+          readOnly: true
+        artist:
+          allOf:
+          - $ref: '#/components/schemas/ArtistList'
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - artist
+      - created_at
+      - id
+      - title
+      - title_url
+    HitNested:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        title:
+          type: string
+          maxLength: 255
+          minLength: 2
+        title_url:
+          type: string
+          format: uri
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - id
+      - title
+      - title_url
+    HitUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 255
+          minLength: 2
+        artist_id:
+          type: string
+          format: uuid
+          writeOnly: true
+        artist:
+          allOf:
+          - $ref: '#/components/schemas/ArtistDetail'
+          readOnly: true
+      required:
+      - artist
+      - title
+    PaginatedArtistListList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArtistList'
+    PaginatedArtistWithHitsList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArtistWithHits'
+    PaginatedHitListList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/HitList'
+    PatchedArtistCreate:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 255
+          minLength: 2
+        last_name:
+          type: string
+          maxLength: 255
+          minLength: 2
+    PatchedHitUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 255
+          minLength: 2
+        artist_id:
+          type: string
+          format: uuid
+          writeOnly: true
+        artist:
+          allOf:
+          - $ref: '#/components/schemas/ArtistDetail'
+          readOnly: true
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
