@@ -46,7 +46,7 @@ Wprowadziłem kilka funkcjonalności wykraczających poza podstawowe wymagania, 
 Aby uruchomić aplikację:
 ```bash
 git clone https://github.com/vaqMAD/RestHitsVeloBank
-cd timemate
+cd RestHitsVeloBank
 docker compose up --build
 ```
 
